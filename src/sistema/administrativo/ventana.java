@@ -306,8 +306,6 @@ public class ventana extends JFrame {
                     datosTabla.addRow(fila);
             }
         }
-        
-        JOptionPane.showMessageDialog(null,"Holii");  
         JTable tablaClientes = new JTable(datosTabla);
         JScrollPane barraTablaClientes = new JScrollPane (tablaClientes);
         barraTablaClientes.setBounds(10,10,300,300);
