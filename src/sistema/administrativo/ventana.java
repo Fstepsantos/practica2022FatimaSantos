@@ -302,12 +302,12 @@ public class ventana extends JFrame {
         
         for (int i = 0; i < 100; i++) {
             if (clientes[i] != null) {
-                if (clientes[i] ! = null)) {
                     String fila [] = {clientes[i]. Nombre, String.valueOf(clientes[i].Edad), String.valueOf(clientes[i].genero),String.valueOf( clientes[i].NIT)};
+                    datosTabla.addRow(fila);
             }
         }
         
-            datosTabla.addTow(fila);
+        JOptionPane.showMessageDialog(null,"Holii");  
         JTable tablaClientes = new JTable(datosTabla);
         JScrollPane barraTablaClientes = new JScrollPane (tablaClientes);
         barraTablaClientes.setBounds(10,10,300,300);
