@@ -311,21 +311,7 @@ public class ventana extends JFrame {
         barraTablaClientes.setBounds(10,10,300,300);
         PCClientes.add(barraTablaClientes);
 
-    }/*
-    public void datostabla(){
-    DefaultTablaModel datosTabla = new DefaultTablaModel();
-    datosTabla.addColum("Nombre");
-    datosTabla.addColum("Edad");
-    datosTabla.addColum("Género");
-    datosTabla.addColum("NIT");
-    
-    for (int i = 0; i < 10; i++) {
-            if (Clientes[i] != null) {
-                String fila [] = clientes[i].nombre, String.valueOf(clientes[i].edad), String.valueof(clientes[i].genero);
-                datostabla.addRow(fila);
-                } 
-        }
-    }*/
+    }
     
     
 }
