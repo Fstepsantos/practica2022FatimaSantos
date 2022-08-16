@@ -3,7 +3,9 @@ package sistema.administrativo;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -180,7 +182,7 @@ public class ventana extends JFrame {
         lblRegistro.setBounds(21, 10, 300, 35);
         PCrear.add(lblRegistro);
 
-        JLabel lblN = new JLabel("Nombre");
+        JLabel lblN = new JLabel("Usuario");
         PCrear.setLayout(null);
         lblN.setBounds(41, 62, 100, 35);
         lblN.setFont(new Font("Serif", Font.PLAIN, 15));
@@ -190,7 +192,7 @@ public class ventana extends JFrame {
         txtNombre.setBounds(200, 68, 180, 25);
         PCrear.add(txtNombre);
 
-        JLabel lblU = new JLabel("Usuario");
+        JLabel lblU = new JLabel("Nombre");
         PCrear.setLayout(null);
         lblU.setBounds(41, 102, 200, 35);
         lblU.setFont(new Font("Serif", Font.PLAIN, 15));
@@ -280,7 +282,7 @@ public class ventana extends JFrame {
             usuSistema[posicion].contra = Contra;
             control++;
             JOptionPane.showMessageDialog(null, "Ususario registrado correctamente, total de espacios" + " " + control);
-
+            
         } else {
 
             JOptionPane.showMessageDialog(null, "No se pueden registrar más usuarios");
@@ -290,7 +292,7 @@ public class ventana extends JFrame {
     public void PCCli(){
         this.getContentPane().add(PCClientes);
         PCClientes.setLayout(null);
-        this.setSize(450, 350);
+        this.setSize(590, 400);
         this.setTitle("Control de clientes");
         PControl.setVisible(false);
         
@@ -310,9 +312,20 @@ public class ventana extends JFrame {
         JScrollPane barraTablaClientes = new JScrollPane (tablaClientes);
         barraTablaClientes.setBounds(10,10,300,300);
         PCClientes.add(barraTablaClientes);
-
-    }
-    
-    
+        
+        JButton btnCargarArchivo = new JButton ("Buscar Archivos CSV");
+        btnCargarArchivo.setBounds(320,10,200,25);
+        PCClientes.add(btnCargarArchivo);
+        ActionListener buscarArchivo = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+             File archivoSeleccionado;
+             JFileChooser ventanaSeleccion = new JFileChooser();
+             ventanaSeleccion.showOpenDialog(null);
+             archivoSeleccionado = ventanaSeleccion.getSelectedFile();
+            }
+        };
+        btnCargarArchivo.addActionListener(buscarArchivo);
+    }   
 }
 // lengh obteniamos el tamaño de caracteres
