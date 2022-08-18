@@ -3,7 +3,10 @@ package sistema.administrativo;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -21,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Fstep
  */
 public class ventana extends JFrame {
-    
+
     usuario usuSistema[] = new usuario[10];
     JPanel PLogin = new JPanel();
     JPanel PControl = new JPanel();
@@ -30,7 +33,7 @@ public class ventana extends JFrame {
     cliente clientes[] = new cliente[100];
     int controlCliente = 0;
     JPanel PCClientes = new JPanel();
-    
+
     //Metodo constructor
     public ventana() {
         objetos();
@@ -49,14 +52,14 @@ public class ventana extends JFrame {
         usuSistema[1].nombre = "Juan Perez";
         usuSistema[1].contra = "0";
     }
-    
-    public void crearClientes(){
-    clientes[0] = new cliente();
-    clientes[0].Nombre = "Marta";
-    clientes[0].Edad = 20;
-    clientes[0].genero = 'F';
-    clientes[0].NIT = 147852;
-    
+
+    public void crearClientes() {
+        clientes[0] = new cliente();
+        clientes[0].Nombre = "Marta";
+        clientes[0].Edad = 20;
+        clientes[0].genero = 'F';
+        clientes[0].NIT = 147852;
+
     }
 
     public void objetos() {
@@ -149,14 +152,13 @@ public class ventana extends JFrame {
         JButton btnAdminCl = new JButton("Administración de Clientes");
         btnAdminCl.setBounds(100, 60, 250, 30);
         PControl.add(btnAdminCl);
-        ActionListener AdmiClientes = new ActionListener(){
+        ActionListener AdmiClientes = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 PCCli();
                 PCClientes.setVisible(true);
             }
-        
-        
+
         };
         btnAdminCl.addActionListener(AdmiClientes);
 
@@ -246,7 +248,7 @@ public class ventana extends JFrame {
             }
         };
         btnReg.addActionListener(registrar);
-        
+
         JButton btnVolver = new JButton("Volver al inicio");
         btnVolver.setBounds(250, 260, 140, 29);
         PCrear.add(btnVolver);
@@ -282,50 +284,73 @@ public class ventana extends JFrame {
             usuSistema[posicion].contra = Contra;
             control++;
             JOptionPane.showMessageDialog(null, "Ususario registrado correctamente, total de espacios" + " " + control);
-            
+
         } else {
 
             JOptionPane.showMessageDialog(null, "No se pueden registrar más usuarios");
         }
     }
-    
-    public void PCCli(){
+
+    public void PCCli() {
         this.getContentPane().add(PCClientes);
         PCClientes.setLayout(null);
         this.setSize(590, 400);
         this.setTitle("Control de clientes");
         PControl.setVisible(false);
-        
-        DefaultTableModel datosTabla =new DefaultTableModel();
+
+        DefaultTableModel datosTabla = new DefaultTableModel();
         datosTabla.addColumn("Nombre");
         datosTabla.addColumn("Edad");
         datosTabla.addColumn("Genero");
         datosTabla.addColumn("NIT");
-        
+
         for (int i = 0; i < 100; i++) {
             if (clientes[i] != null) {
-                    String fila [] = {clientes[i]. Nombre, String.valueOf(clientes[i].Edad), String.valueOf(clientes[i].genero),String.valueOf( clientes[i].NIT)};
-                    datosTabla.addRow(fila);
+                String fila[] = {clientes[i].Nombre, String.valueOf(clientes[i].Edad), String.valueOf(clientes[i].genero), String.valueOf(clientes[i].NIT)};
+                datosTabla.addRow(fila);
             }
         }
         JTable tablaClientes = new JTable(datosTabla);
-        JScrollPane barraTablaClientes = new JScrollPane (tablaClientes);
-        barraTablaClientes.setBounds(10,10,300,300);
+        JScrollPane barraTablaClientes = new JScrollPane(tablaClientes);
+        barraTablaClientes.setBounds(10, 10, 300, 300);
         PCClientes.add(barraTablaClientes);
-        
-        JButton btnCargarArchivo = new JButton ("Buscar Archivos CSV");
-        btnCargarArchivo.setBounds(320,10,200,25);
+
+        JButton btnCargarArchivo = new JButton("Buscar Archivos CSV");
+        btnCargarArchivo.setBounds(320, 10, 200, 25);
         PCClientes.add(btnCargarArchivo);
         ActionListener buscarArchivo = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-             File archivoSeleccionado;
-             JFileChooser ventanaSeleccion = new JFileChooser();
-             ventanaSeleccion.showOpenDialog(null);
-             archivoSeleccionado = ventanaSeleccion.getSelectedFile();
+                File archivoSeleccionado;
+                JFileChooser ventanaSeleccion = new JFileChooser();
+                ventanaSeleccion.showOpenDialog(null);
+                archivoSeleccionado = ventanaSeleccion.getSelectedFile();
+                //Prueba
+                System.out.println("La ubicación del archivo es:" + archivoSeleccionado.getPath());
+                leerArchivoCSV(archivoSeleccionado.getPath());
             }
         };
         btnCargarArchivo.addActionListener(buscarArchivo);
-    }   
+    }
+    
+    public void leerArchivoCSV(String ruta){
+        try {
+            BufferedReader archivoTemporal = new BufferedReader(new FileReader(ruta));
+            String lineaLeida= "";
+            while(lineaLeida != null){
+                lineaLeida = archivoTemporal.readLine();
+                if(lineaLeida !=null){
+                    System.out.println(lineaLeida);
+                
+                }
+            }
+            archivoTemporal.close();
+        }catch(IOException error){
+            JOptionPane.showMessageDialog(null, "No se pudo abrir archivo CSV");
+        
+        
+        }
+    
+    }
 }
 // lengh obteniamos el tamaño de caracteres
