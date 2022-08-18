@@ -33,6 +33,7 @@ public class ventana extends JFrame {
     cliente clientes[] = new cliente[100];
     int controlCliente = 0;
     JPanel PCClientes = new JPanel();
+    int controlClientes = 2;
 
     //Metodo constructor
     public ventana() {
@@ -332,25 +333,44 @@ public class ventana extends JFrame {
         };
         btnCargarArchivo.addActionListener(buscarArchivo);
     }
-    
-    public void leerArchivoCSV(String ruta){
+
+    public void leerArchivoCSV(String ruta) {
         try {
             BufferedReader archivoTemporal = new BufferedReader(new FileReader(ruta));
-            String lineaLeida= "";
-            while(lineaLeida != null){
+            String lineaLeida = "";
+            while (lineaLeida != null) {
                 lineaLeida = archivoTemporal.readLine();
-                if(lineaLeida !=null){
-                    System.out.println(lineaLeida);
-                
+                if (lineaLeida != null) {
+                    String DatosSeparados[] = lineaLeida.split(",");
+                    int posicion = 0;
+                    if (controlClientes < 10) {
+                        for (int i = 0; 1 < 99; i++) {
+                            if (clientes[i] == null) {
+                                posicion = i;
+                                break;
+                            }
+                        }
+                        clientes[posicion] = new cliente();
+                        clientes[posicion].Nombre = DatosSeparados[0];
+                        clientes[posicion].Edad = Integer.parseInt(DatosSeparados[1]);
+                        clientes[posicion].genero = DatosSeparados[2].charAt(0);
+                        clientes[posicion].NIT = Integer.parseInt(DatosSeparados[3]);
+                        controlClientes++;
+                        JOptionPane.showMessageDialog(null, "Clientes registrados correctamente, total de espacios" + " " + controlClientes);
+
+                    } else {
+
+                        JOptionPane.showMessageDialog(null, "No se pueden registrar más clientes");
+                    }
                 }
             }
             archivoTemporal.close();
-        }catch(IOException error){
+        } catch (IOException error) {
             JOptionPane.showMessageDialog(null, "No se pudo abrir archivo CSV");
-        
-        
+
         }
-    
+
     }
 }
 // lengh obteniamos el tamaño de caracteres
+//Split es un metodo que separa las cadenas de textos en vectores 
