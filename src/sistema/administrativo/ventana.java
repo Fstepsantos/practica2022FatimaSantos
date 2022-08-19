@@ -34,8 +34,8 @@ public class ventana extends JFrame {
     cliente clientes[] = new cliente[100];
     int controlCliente = 0;
     JPanel PCClientes = new JPanel();
-    int controlClientes = 2;
-   
+    int controlCli = 0;
+
     //Metodo constructor
     public ventana() {
         objetos();
@@ -67,12 +67,10 @@ public class ventana extends JFrame {
     public void objetos() {
         //crear cristal donde estarán todos los elementos 
         this.getContentPane().add(PLogin); //this sirve para indicarle que ha esa ventana se le ha creado un panel
-         
+
         JLabel lblLogin = new JLabel("Iniciar Sesión");
         PLogin.setLayout(null); //setLayout se utiliza para que el programa tome nuestra posición
-        lblLogin.setFont(new Font("Roboto", Font.TYPE1_FONT,22));
-        lblLogin.setForeground(Color.BLACK);
-        PLogin.setBackground(Color.WHITE);
+        lblLogin.setFont(new Font("Roboto", Font.TYPE1_FONT, 22));
         lblLogin.setBounds(21, 10, 300, 35);
         PLogin.add(lblLogin);
 
@@ -90,7 +88,7 @@ public class ventana extends JFrame {
 
         JTextField txtUsu = new JTextField();
         txtUsu.setBounds(190, 66, 205, 30);
-        
+
         PLogin.add(txtUsu);
 
         JPasswordField txtContra = new JPasswordField();
@@ -116,7 +114,7 @@ public class ventana extends JFrame {
         btnIngresar.addActionListener(ingresar);
 
         JButton btnCrearUsu = new JButton("REGISTRARSE");
-        btnCrearUsu.setBounds(245,230, 150, 39);
+        btnCrearUsu.setBounds(245, 230, 150, 39);
         PLogin.add(btnCrearUsu);
         ActionListener crear = new ActionListener() {
             @Override
@@ -149,14 +147,13 @@ public class ventana extends JFrame {
 
     public void panelControl() {
         this.getContentPane().add(PControl);
-        PControl.setBackground(Color.WHITE);
         PControl.setLayout(null);
         this.setSize(500, 350);
         this.setTitle("Control Principal");
         PLogin.setVisible(false);
 
         JButton btnAdminCl = new JButton("Administración de Clientes");
-        btnAdminCl.setBounds(100, 60, 250, 30);
+        btnAdminCl.setBounds(100, 60, 280, 39);
         PControl.add(btnAdminCl);
         ActionListener AdmiClientes = new ActionListener() {
             @Override
@@ -169,24 +166,23 @@ public class ventana extends JFrame {
         btnAdminCl.addActionListener(AdmiClientes);
 
         JButton btnAdminPro = new JButton("Administración de Productos");
-        btnAdminPro.setBounds(100, 120, 250, 30);
+        btnAdminPro.setBounds(100, 120, 280, 39);
         PControl.add(btnAdminPro);
 
         JButton btnAdminRe = new JButton("Administración de Reportes");
-        btnAdminRe.setBounds(100, 180, 250, 30);
+        btnAdminRe.setBounds(100, 180, 280, 39);
         PControl.add(btnAdminRe);
     }
 
     public void panelCrearUsu() {
         this.getContentPane().add(PCrear);
         PCrear.setLayout(null);
-        PCrear.setBackground(Color.WHITE);
         this.setSize(500, 350);
         this.setTitle("Crear Usuario");
         PLogin.setVisible(false);
 
         JLabel lblRegistro = new JLabel("Crea tu usuario");
-        lblRegistro.setFont(new Font("Roboto", Font.TYPE1_FONT,22));
+        lblRegistro.setFont(new Font("Roboto", Font.TYPE1_FONT, 22));
         lblRegistro.setForeground(Color.BLACK);
         PCrear.setLayout(null);
         lblRegistro.setFont(new Font("Roboto", Font.PLAIN, 25));
@@ -270,7 +266,7 @@ public class ventana extends JFrame {
             }
         };
         btnVolver.addActionListener(volverInicio);
-        
+
     }
 
     public void volverinicio() {
@@ -303,7 +299,6 @@ public class ventana extends JFrame {
 
     public void PCCli() {
         this.getContentPane().add(PCClientes);
-        PCClientes.setBackground(Color.WHITE);
         PCClientes.setLayout(null);
         this.setSize(590, 400);
         this.setTitle("Control de clientes");
@@ -352,7 +347,7 @@ public class ventana extends JFrame {
                 if (lineaLeida != null) {
                     String DatosSeparados[] = lineaLeida.split(",");
                     int posicion = 0;
-                    if (controlClientes < 10) {
+                    if (controlCli < 10) {
                         for (int i = 0; 1 < 99; i++) {
                             if (clientes[i] == null) {
                                 posicion = i;
@@ -364,13 +359,14 @@ public class ventana extends JFrame {
                         clientes[posicion].Edad = Integer.parseInt(DatosSeparados[1]);
                         clientes[posicion].genero = DatosSeparados[2].charAt(0);
                         clientes[posicion].NIT = Integer.parseInt(DatosSeparados[3]);
-                        controlClientes++;
+                        controlCli++;
                     } else {
 
                         JOptionPane.showMessageDialog(null, "No se pueden registrar más clientes");
                     }
                 }
-            }JOptionPane.showMessageDialog(null, "Clientes registrados correctamente, total de clientes" + " " + controlClientes);
+            }
+            JOptionPane.showMessageDialog(null, "Clientes registrados correctamente, total de clientes" + " " + controlCli);
             archivoTemporal.close();
         } catch (IOException error) {
             JOptionPane.showMessageDialog(null, "No se pudo abrir archivo CSV");
