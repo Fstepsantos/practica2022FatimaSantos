@@ -1,5 +1,6 @@
 package sistema.administrativo;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,7 +35,7 @@ public class ventana extends JFrame {
     int controlCliente = 0;
     JPanel PCClientes = new JPanel();
     int controlClientes = 2;
-
+   
     //Metodo constructor
     public ventana() {
         objetos();
@@ -66,35 +67,38 @@ public class ventana extends JFrame {
     public void objetos() {
         //crear cristal donde estarán todos los elementos 
         this.getContentPane().add(PLogin); //this sirve para indicarle que ha esa ventana se le ha creado un panel
-
-        JLabel lblLogin = new JLabel("Login");
+         
+        JLabel lblLogin = new JLabel("Iniciar Sesión");
         PLogin.setLayout(null); //setLayout se utiliza para que el programa tome nuestra posición
-        lblLogin.setFont(new Font("Serif", Font.PLAIN, 25));
+        lblLogin.setFont(new Font("Roboto", Font.TYPE1_FONT,22));
+        lblLogin.setForeground(Color.BLACK);
+        PLogin.setBackground(Color.WHITE);
         lblLogin.setBounds(21, 10, 300, 35);
         PLogin.add(lblLogin);
 
         JLabel lbUsu = new JLabel("Usuario");
         PLogin.setLayout(null);
-        lbUsu.setBounds(41, 62, 100, 35);
-        lbUsu.setFont(new Font("Serif", Font.PLAIN, 15));
+        lbUsu.setBounds(61, 62, 100, 35);
+        lbUsu.setFont(new Font("Roboto", Font.PLAIN, 15));
         PLogin.add(lbUsu);
 
         JLabel lbCon = new JLabel("Contraseña");
         PLogin.setLayout(null);
-        lbCon.setFont(new Font("Serif", Font.PLAIN, 15));
-        lbCon.setBounds(41, 120, 100, 35);
+        lbCon.setFont(new Font("Roboto", Font.PLAIN, 15));
+        lbCon.setBounds(61, 120, 100, 35);
         PLogin.add(lbCon);
 
         JTextField txtUsu = new JTextField();
-        txtUsu.setBounds(160, 66, 180, 29);
+        txtUsu.setBounds(190, 66, 205, 30);
+        
         PLogin.add(txtUsu);
 
         JPasswordField txtContra = new JPasswordField();
-        txtContra.setBounds(160, 126, 180, 29);
+        txtContra.setBounds(190, 126, 205, 30);
         PLogin.add(txtContra);
 
-        JButton btnIngresar = new JButton("Ingresar");
-        btnIngresar.setBounds(50, 260, 150, 29);
+        JButton btnIngresar = new JButton("INGRESAR");
+        btnIngresar.setBounds(61, 230, 150, 39);
         PLogin.add(btnIngresar);
         ActionListener ingresar = new ActionListener() {
             @Override
@@ -111,8 +115,8 @@ public class ventana extends JFrame {
         };
         btnIngresar.addActionListener(ingresar);
 
-        JButton btnCrearUsu = new JButton("Registrarse");
-        btnCrearUsu.setBounds(230, 260, 150, 29);
+        JButton btnCrearUsu = new JButton("REGISTRARSE");
+        btnCrearUsu.setBounds(245,230, 150, 39);
         PLogin.add(btnCrearUsu);
         ActionListener crear = new ActionListener() {
             @Override
@@ -145,8 +149,9 @@ public class ventana extends JFrame {
 
     public void panelControl() {
         this.getContentPane().add(PControl);
+        PControl.setBackground(Color.WHITE);
         PControl.setLayout(null);
-        this.setSize(450, 350);
+        this.setSize(500, 350);
         this.setTitle("Control Principal");
         PLogin.setVisible(false);
 
@@ -175,58 +180,61 @@ public class ventana extends JFrame {
     public void panelCrearUsu() {
         this.getContentPane().add(PCrear);
         PCrear.setLayout(null);
+        PCrear.setBackground(Color.WHITE);
         this.setSize(500, 350);
         this.setTitle("Crear Usuario");
         PLogin.setVisible(false);
 
         JLabel lblRegistro = new JLabel("Crea tu usuario");
+        lblRegistro.setFont(new Font("Roboto", Font.TYPE1_FONT,22));
+        lblRegistro.setForeground(Color.BLACK);
         PCrear.setLayout(null);
-        lblRegistro.setFont(new Font("Serif", Font.PLAIN, 25));
+        lblRegistro.setFont(new Font("Roboto", Font.PLAIN, 25));
         lblRegistro.setBounds(21, 10, 300, 35);
         PCrear.add(lblRegistro);
 
         JLabel lblN = new JLabel("Usuario");
         PCrear.setLayout(null);
-        lblN.setBounds(41, 62, 100, 35);
-        lblN.setFont(new Font("Serif", Font.PLAIN, 15));
+        lblN.setBounds(61, 62, 100, 35);
+        lblN.setFont(new Font("Roboto", Font.PLAIN, 15));
         PCrear.add(lblN);
 
         JTextField txtNombre = new JTextField();
-        txtNombre.setBounds(200, 68, 180, 25);
+        txtNombre.setBounds(215, 68, 180, 25);
         PCrear.add(txtNombre);
 
         JLabel lblU = new JLabel("Nombre");
         PCrear.setLayout(null);
-        lblU.setBounds(41, 102, 200, 35);
-        lblU.setFont(new Font("Serif", Font.PLAIN, 15));
+        lblU.setBounds(61, 102, 200, 35);
+        lblU.setFont(new Font("Roboto", Font.PLAIN, 15));
         PCrear.add(lblU);
 
         JTextField txtUsu = new JTextField();
-        txtUsu.setBounds(200, 108, 180, 25);
+        txtUsu.setBounds(215, 108, 180, 25);
         PCrear.add(txtUsu);
 
         JLabel lblC = new JLabel("Contraseña");
         PCrear.setLayout(null);
-        lblC.setFont(new Font("Serif", Font.PLAIN, 15));
-        lblC.setBounds(41, 142, 200, 35);
+        lblC.setFont(new Font("Roboto", Font.PLAIN, 15));
+        lblC.setBounds(61, 142, 200, 35);
         PCrear.add(lblC);
 
         JTextField txtContra = new JTextField();
-        txtContra.setBounds(200, 148, 180, 25);
+        txtContra.setBounds(215, 148, 180, 25);
         PCrear.add(txtContra);
 
         JLabel lblCC = new JLabel("Confirmar contraseña");
         PCrear.setLayout(null);
-        lblCC.setFont(new Font("Serif", Font.PLAIN, 15));
-        lblCC.setBounds(41, 182, 200, 35);
+        lblCC.setFont(new Font("Roboto", Font.PLAIN, 15));
+        lblCC.setBounds(61, 182, 200, 35);
         PCrear.add(lblCC);
 
         JTextField txtCC = new JTextField();
-        txtCC.setBounds(200, 188, 180, 25);
+        txtCC.setBounds(215, 188, 180, 25);
         PCrear.add(txtCC);
 
-        JButton btnReg = new JButton("Registrarse");
-        btnReg.setBounds(60, 260, 140, 29);
+        JButton btnReg = new JButton("REGISTRARSE");
+        btnReg.setBounds(61, 245, 150, 39);
         PCrear.add(btnReg);
         ActionListener registrar = new ActionListener() {
             @Override
@@ -250,23 +258,24 @@ public class ventana extends JFrame {
         };
         btnReg.addActionListener(registrar);
 
-        JButton btnVolver = new JButton("Volver al inicio");
-        btnVolver.setBounds(250, 260, 140, 29);
+        JButton btnVolver = new JButton("VOLVER AL INICIO");
+        btnVolver.setBounds(245, 245, 150, 39);
         PCrear.add(btnVolver);
         ActionListener volverInicio = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 PLogin.setVisible(true);
                 PCrear.setVisible(false);
+                volverinicio();
             }
         };
         btnVolver.addActionListener(volverInicio);
-        volverinicio();
+        
     }
 
     public void volverinicio() {
-        this.setTitle("Sistema de clientes y recursos");
-        this.setSize(450, 350);
+        this.setTitle("Sistema administrativo de clientes y recursos");
+        this.setSize(500, 350);
     }
 
     public void GuardarUsu(String Usu, String nombre, String Contra) {
@@ -294,6 +303,7 @@ public class ventana extends JFrame {
 
     public void PCCli() {
         this.getContentPane().add(PCClientes);
+        PCClientes.setBackground(Color.WHITE);
         PCClientes.setLayout(null);
         this.setSize(590, 400);
         this.setTitle("Control de clientes");
@@ -302,7 +312,7 @@ public class ventana extends JFrame {
         DefaultTableModel datosTabla = new DefaultTableModel();
         datosTabla.addColumn("Nombre");
         datosTabla.addColumn("Edad");
-        datosTabla.addColumn("Genero");
+        datosTabla.addColumn("Género");
         datosTabla.addColumn("NIT");
 
         for (int i = 0; i < 100; i++) {
@@ -316,7 +326,7 @@ public class ventana extends JFrame {
         barraTablaClientes.setBounds(10, 10, 300, 300);
         PCClientes.add(barraTablaClientes);
 
-        JButton btnCargarArchivo = new JButton("Buscar Archivos CSV");
+        JButton btnCargarArchivo = new JButton("Buscar archivos CSV");
         btnCargarArchivo.setBounds(320, 10, 200, 25);
         PCClientes.add(btnCargarArchivo);
         ActionListener buscarArchivo = new ActionListener() {
@@ -326,7 +336,6 @@ public class ventana extends JFrame {
                 JFileChooser ventanaSeleccion = new JFileChooser();
                 ventanaSeleccion.showOpenDialog(null);
                 archivoSeleccionado = ventanaSeleccion.getSelectedFile();
-                //Prueba
                 System.out.println("La ubicación del archivo es:" + archivoSeleccionado.getPath());
                 leerArchivoCSV(archivoSeleccionado.getPath());
             }
@@ -356,14 +365,12 @@ public class ventana extends JFrame {
                         clientes[posicion].genero = DatosSeparados[2].charAt(0);
                         clientes[posicion].NIT = Integer.parseInt(DatosSeparados[3]);
                         controlClientes++;
-                        JOptionPane.showMessageDialog(null, "Clientes registrados correctamente, total de espacios" + " " + controlClientes);
-
                     } else {
 
                         JOptionPane.showMessageDialog(null, "No se pueden registrar más clientes");
                     }
                 }
-            }
+            }JOptionPane.showMessageDialog(null, "Clientes registrados correctamente, total de clientes" + " " + controlClientes);
             archivoTemporal.close();
         } catch (IOException error) {
             JOptionPane.showMessageDialog(null, "No se pudo abrir archivo CSV");

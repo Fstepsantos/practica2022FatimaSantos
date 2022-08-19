@@ -12,7 +12,7 @@ public class SistemaAdministrativo {
         ventana marco = new ventana();
         marco.setVisible(true);
         marco.setTitle("Sistema Administrativo de clientes y recursos");
-        marco.setSize(450, 350);
+        marco.setSize(500, 350);
         marco.setLocationRelativeTo(null);
         marco.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
