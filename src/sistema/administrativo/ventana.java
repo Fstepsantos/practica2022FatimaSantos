@@ -27,13 +27,13 @@ import javax.swing.table.DefaultTableModel;
 public class ventana extends JFrame {
 
     usuario usuSistema[] = new usuario[10];
-    JPanel PLogin = new JPanel();
-    JPanel PControl = new JPanel();
-    JPanel PCrear = new JPanel();
+    JPanel PLogin;
+    JPanel PControl;
+    JPanel PCrear;
     int control = 2;
     cliente clientes[] = new cliente[100];
     int controlCliente = 0;
-    JPanel PCClientes = new JPanel();
+    JPanel PCClientes;
     int controlCli = 0;
 
     //Metodo constructor
@@ -66,6 +66,7 @@ public class ventana extends JFrame {
 
     public void objetos() {
         //crear cristal donde estarán todos los elementos 
+        PLogin = new JPanel();
         this.getContentPane().add(PLogin); //this sirve para indicarle que ha esa ventana se le ha creado un panel
 
         JLabel lblLogin = new JLabel("Iniciar Sesión");
@@ -146,6 +147,7 @@ public class ventana extends JFrame {
     }
 
     public void panelControl() {
+        PControl = new JPanel();
         this.getContentPane().add(PControl);
         PControl.setLayout(null);
         this.setSize(500, 350);
@@ -175,6 +177,7 @@ public class ventana extends JFrame {
     }
 
     public void panelCrearUsu() {
+        PCrear = new JPanel();
         this.getContentPane().add(PCrear);
         PCrear.setLayout(null);
         this.setSize(500, 350);
@@ -298,6 +301,7 @@ public class ventana extends JFrame {
     }
 
     public void PCCli() {
+        PCClientes = new JPanel();
         this.getContentPane().add(PCClientes);
         PCClientes.setLayout(null);
         this.setSize(590, 400);
@@ -333,6 +337,7 @@ public class ventana extends JFrame {
                 archivoSeleccionado = ventanaSeleccion.getSelectedFile();
                 System.out.println("La ubicación del archivo es:" + archivoSeleccionado.getPath());
                 leerArchivoCSV(archivoSeleccionado.getPath());
+                
             }
         };
         btnCargarArchivo.addActionListener(buscarArchivo);
