@@ -19,7 +19,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 /**
  *
  * @author Fstep
@@ -304,10 +309,11 @@ public class ventana extends JFrame {
         PCClientes = new JPanel();
         this.getContentPane().add(PCClientes);
         PCClientes.setLayout(null);
-        this.setSize(590, 400);
+        this.setSize(690, 400);
         this.setTitle("Control de clientes");
         PControl.setVisible(false);
-
+        
+        //Creacion de la tabla
         DefaultTableModel datosTabla = new DefaultTableModel();
         datosTabla.addColumn("Nombre");
         datosTabla.addColumn("Edad");
@@ -324,9 +330,25 @@ public class ventana extends JFrame {
         JScrollPane barraTablaClientes = new JScrollPane(tablaClientes);
         barraTablaClientes.setBounds(10, 10, 300, 300);
         PCClientes.add(barraTablaClientes);
-
+        
+        //Creacion del grafico circular
+        DefaultPieDataset datos = new DefaultPieDataset();
+        datos.setValue("Masculino", TMasculino());
+        datos.setValue("Femenino", TFemenino());
+        JFreeChart GCircular = ChartFactory.createPieChart("Total de clientes", datos);
+        ChartPanel PCircular = new ChartPanel(GCircular);
+        PCircular.setBounds(320,10, 300, 300);
+        PCClientes.add(PCircular);
+       
+        JOptionPane.showMessageDialog(null,"El total de hombres en el sistema es:" + " "+ TMasculino());
+        JOptionPane.showMessageDialog(null,"El total de mujeres en el sistema es:" + " "+ TFemenino());
+        //Grafico de columnas
+        System.out.println("El total de 18 a 30:" + rango18());
+        System.out.println("El total de 31 a 45:" + rango31());
+        System.out.println("El total de 45 en adelante:" + rango45());
+        
         JButton btnCargarArchivo = new JButton("Buscar archivos CSV");
-        btnCargarArchivo.setBounds(320, 10, 200, 25);
+        btnCargarArchivo.setBounds(10, 320, 300, 25);
         PCClientes.add(btnCargarArchivo);
         ActionListener buscarArchivo = new ActionListener() {
             @Override
@@ -337,12 +359,67 @@ public class ventana extends JFrame {
                 archivoSeleccionado = ventanaSeleccion.getSelectedFile();
                 System.out.println("La ubicación del archivo es:" + archivoSeleccionado.getPath());
                 leerArchivoCSV(archivoSeleccionado.getPath());
-                
+                PCClientes.setVisible(false);
+                PCCli();
             }
         };
         btnCargarArchivo.addActionListener(buscarArchivo);
     }
-
+    public int TMasculino(){
+        int total = 0;
+        for(int i = 0; i < 100; i++){
+           if(clientes[i] !=null){
+               if(clientes[i].genero =='M'){
+                   total++;
+               }
+           }
+    }return total;
+    }
+    
+    public int TFemenino(){
+        int total = 0;
+        for(int i = 0; i < 100; i++){
+           if(clientes[i] !=null){
+               if(clientes[i].genero =='F'){
+                   total++;
+               }
+           }
+    }return total;
+    }
+    
+    public int rango18(){
+        int total = 0;
+        for(int i = 0; i < 100; i++){
+           if(clientes[i] !=null){
+               if(clientes[i].Edad >= 18 && clientes[i].Edad <30){
+                   total++;
+               }
+           }
+    }return total;
+    }
+    
+    public int rango31(){
+        int total = 0;
+        for(int i = 0; i < 100; i++){
+           if(clientes[i] !=null){
+               if(clientes[i].Edad >= 31 && clientes[i].Edad <45){
+                   total++;
+               }
+           }
+    }return total;
+    }
+ public int rango45(){
+        int total = 0;
+        for(int i = 0; i < 100; i++){
+           if(clientes[i] !=null){
+               if(clientes[i].Edad >45){
+                   total++;
+               }
+           }
+    }return total;
+    } 
+    
+    
     public void leerArchivoCSV(String ruta) {
         try {
             BufferedReader archivoTemporal = new BufferedReader(new FileReader(ruta));
