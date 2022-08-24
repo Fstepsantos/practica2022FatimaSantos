@@ -342,7 +342,7 @@ public class ventana extends JFrame {
        
         JOptionPane.showMessageDialog(null,"El total de hombres en el sistema es:" + " "+ TMasculino());
         JOptionPane.showMessageDialog(null,"El total de mujeres en el sistema es:" + " "+ TFemenino());
-        //Grafico de columnas
+        //Creacion del grafico de columnas
         System.out.println("El total de 18 a 30:" + rango18());
         System.out.println("El total de 31 a 45:" + rango31());
         System.out.println("El total de 45 en adelante:" + rango45());
