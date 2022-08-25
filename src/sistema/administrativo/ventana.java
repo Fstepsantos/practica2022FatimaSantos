@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -309,7 +310,7 @@ public class ventana extends JFrame {
         PCClientes = new JPanel();
         this.getContentPane().add(PCClientes);
         PCClientes.setLayout(null);
-        this.setSize(690, 400);
+        this.setSize(910, 370);
         this.setTitle("Control de clientes");
         PControl.setVisible(false);
         
@@ -328,27 +329,33 @@ public class ventana extends JFrame {
         }
         JTable tablaClientes = new JTable(datosTabla);
         JScrollPane barraTablaClientes = new JScrollPane(tablaClientes);
-        barraTablaClientes.setBounds(10, 10, 300, 300);
+        barraTablaClientes.setBounds(10, 10, 320, 200);
         PCClientes.add(barraTablaClientes);
         
         //Creacion del grafico circular
         DefaultPieDataset datos = new DefaultPieDataset();
         datos.setValue("Masculino", TMasculino());
         datos.setValue("Femenino", TFemenino());
-        JFreeChart GCircular = ChartFactory.createPieChart("Total de clientes", datos);
+        JFreeChart GCircular = ChartFactory.createPieChart("Genero", datos);
         ChartPanel PCircular = new ChartPanel(GCircular);
-        PCircular.setBounds(320,10, 300, 300);
+        PCircular.setBounds(350,10, 250, 270);
         PCClientes.add(PCircular);
        
-        JOptionPane.showMessageDialog(null,"El total de hombres en el sistema es:" + " "+ TMasculino());
-        JOptionPane.showMessageDialog(null,"El total de mujeres en el sistema es:" + " "+ TFemenino());
+        //JOptionPane.showMessageDialog(null,"El total de hombres en el sistema es:" + " "+ TMasculino());
+        //JOptionPane.showMessageDialog(null,"El total de mujeres en el sistema es:" + " "+ TFemenino());
         //Creacion del grafico de columnas
-        System.out.println("El total de 18 a 30:" + rango18());
-        System.out.println("El total de 31 a 45:" + rango31());
-        System.out.println("El total de 45 en adelante:" + rango45());
         
+        DefaultCategoryDataset Datos = new DefaultCategoryDataset();
+        Datos.addValue(rango18(), "18-30","Edad");
+        Datos.addValue(rango31(), "31-44","Edad");
+        Datos.addValue(rango45(), "Mayor a 45","Edad");
         JButton btnCargarArchivo = new JButton("Buscar archivos CSV");
-        btnCargarArchivo.setBounds(10, 320, 300, 25);
+        btnCargarArchivo.setBounds(10, 215, 320, 30);
+        JFreeChart graficoColumnas = ChartFactory.createBarChart("Rango edades", "Edad", "Escala", Datos, PlotOrientation.VERTICAL, true, true, false);
+        ChartPanel panelColumnas = new ChartPanel(graficoColumnas);
+        panelColumnas.setBounds(620, 10, 250, 270);
+        PCClientes.add(panelColumnas);
+        
         PCClientes.add(btnCargarArchivo);
         ActionListener buscarArchivo = new ActionListener() {
             @Override
@@ -364,6 +371,31 @@ public class ventana extends JFrame {
             }
         };
         btnCargarArchivo.addActionListener(buscarArchivo);
+        JButton btnReport = new JButton("Crear Reporte");
+        btnReport.setBounds(10, 250, 320, 30);
+        PCClientes.add(btnReport);
+        ActionListener CrearHtml = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                CrearReporte();
+            }
+        };
+        btnReport.addActionListener(CrearHtml);
+    }
+    
+    public void CrearReporte(){
+    
+        try{
+            PrintWriter pincel = new PrintWriter("Reportes/ejemplo.txt","UTF-8");
+            pincel.println("Hola es una prueba");
+            pincel.println("Holii");
+            pincel.println("Prueba");
+            pincel.println("Hola es una prueba");
+            pincel.close();
+            
+        }catch(IOException error){
+            JOptionPane.showMessageDialog(null, "No se logro crear el reporte"); 
+        }
     }
     public int TMasculino(){
         int total = 0;
@@ -375,7 +407,6 @@ public class ventana extends JFrame {
            }
     }return total;
     }
-    
     public int TFemenino(){
         int total = 0;
         for(int i = 0; i < 100; i++){
@@ -386,7 +417,6 @@ public class ventana extends JFrame {
            }
     }return total;
     }
-    
     public int rango18(){
         int total = 0;
         for(int i = 0; i < 100; i++){
@@ -396,8 +426,7 @@ public class ventana extends JFrame {
                }
            }
     }return total;
-    }
-    
+    } 
     public int rango31(){
         int total = 0;
         for(int i = 0; i < 100; i++){
@@ -408,7 +437,7 @@ public class ventana extends JFrame {
            }
     }return total;
     }
- public int rango45(){
+    public int rango45(){
         int total = 0;
         for(int i = 0; i < 100; i++){
            if(clientes[i] !=null){
