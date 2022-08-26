@@ -26,6 +26,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+
 /**
  *
  * @author Fstep
@@ -313,7 +314,7 @@ public class ventana extends JFrame {
         this.setSize(910, 370);
         this.setTitle("Control de clientes");
         PControl.setVisible(false);
-        
+
         //Creacion de la tabla
         DefaultTableModel datosTabla = new DefaultTableModel();
         datosTabla.addColumn("Nombre");
@@ -331,31 +332,28 @@ public class ventana extends JFrame {
         JScrollPane barraTablaClientes = new JScrollPane(tablaClientes);
         barraTablaClientes.setBounds(10, 10, 320, 200);
         PCClientes.add(barraTablaClientes);
-        
+
         //Creacion del grafico circular
         DefaultPieDataset datos = new DefaultPieDataset();
         datos.setValue("Masculino", TMasculino());
         datos.setValue("Femenino", TFemenino());
         JFreeChart GCircular = ChartFactory.createPieChart("Genero", datos);
         ChartPanel PCircular = new ChartPanel(GCircular);
-        PCircular.setBounds(350,10, 250, 270);
+        PCircular.setBounds(350, 10, 250, 270);
         PCClientes.add(PCircular);
-       
-        //JOptionPane.showMessageDialog(null,"El total de hombres en el sistema es:" + " "+ TMasculino());
-        //JOptionPane.showMessageDialog(null,"El total de mujeres en el sistema es:" + " "+ TFemenino());
-        //Creacion del grafico de columnas
         
+        //Creacion del grafico de columnas
         DefaultCategoryDataset Datos = new DefaultCategoryDataset();
-        Datos.addValue(rango18(), "18-30","Edad");
-        Datos.addValue(rango31(), "31-44","Edad");
-        Datos.addValue(rango45(), "Mayor a 45","Edad");
+        Datos.addValue(rango18(), "18-30", "Edad");
+        Datos.addValue(rango31(), "31-44", "Edad");
+        Datos.addValue(rango45(), "Mayor a 45", "Edad");
         JButton btnCargarArchivo = new JButton("Buscar archivos CSV");
         btnCargarArchivo.setBounds(10, 215, 320, 30);
         JFreeChart graficoColumnas = ChartFactory.createBarChart("Rango edades", "Edad", "Escala", Datos, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel panelColumnas = new ChartPanel(graficoColumnas);
         panelColumnas.setBounds(620, 10, 250, 270);
         PCClientes.add(panelColumnas);
-        
+
         PCClientes.add(btnCargarArchivo);
         ActionListener buscarArchivo = new ActionListener() {
             @Override
@@ -374,7 +372,7 @@ public class ventana extends JFrame {
         JButton btnReport = new JButton("Crear Reporte");
         btnReport.setBounds(10, 250, 320, 30);
         PCClientes.add(btnReport);
-        ActionListener CrearHtml = new ActionListener(){
+        ActionListener CrearHtml = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 CrearReporte();
@@ -382,73 +380,107 @@ public class ventana extends JFrame {
         };
         btnReport.addActionListener(CrearHtml);
     }
-    
-    public void CrearReporte(){
-    
-        try{
-            PrintWriter pincel = new PrintWriter("Reportes/ejemplo.txt","UTF-8");
-            pincel.println("Hola es una prueba");
-            pincel.println("Holii");
-            pincel.println("Prueba");
-            pincel.println("Hola es una prueba");
+
+    public void CrearReporte() {
+
+        try {
+            PrintWriter pincel = new PrintWriter("Reportes/reporte.html", "UTF-8");
+            pincel.println("<!DOCTYPE html>");
+            pincel.println("<html>");
+            pincel.println("<head>");
+            pincel.println("<title>Reporte del sistema</title>");
+            pincel.println("</head>");
+            pincel.println("<body>");
+            pincel.println("<center>");
+            pincel.println("<h1>Listado de clientes en el sistema</h1>");
+            pincel.println("<br>");
+
+            pincel.println("<table border =1>");
+            pincel.println("<tr>");
+            pincel.println("<td>NIT</td><td>Nombre</td><td>Edad</td><td>Genero</td>");
+            pincel.println("</tr>");
+
+            for (int i = 0; i < 99; i++) {
+                if (clientes[i] != null) {
+                    pincel.println("<tr>");
+                    pincel.println("<td>" + clientes[i].NIT + "</td>" + "<td>" + clientes[i].Nombre + "</td>" + "<td>" + clientes[i].Edad + "</td>" + "<td>" + clientes[i].genero);
+                    pincel.println("</tr>");
+                }
+            }
+            pincel.println("</table>");
+
+            pincel.println("</center>");
+            pincel.println("</body>");
+            pincel.println("</html>");
+
             pincel.close();
-            
-        }catch(IOException error){
-            JOptionPane.showMessageDialog(null, "No se logro crear el reporte"); 
+            JOptionPane.showMessageDialog(null, "Se logro crear el reporte");
+
+        } catch (IOException error) {
+            JOptionPane.showMessageDialog(null, "No se logro crear el reporte");
         }
     }
-    public int TMasculino(){
+
+    public int TMasculino() {
         int total = 0;
-        for(int i = 0; i < 100; i++){
-           if(clientes[i] !=null){
-               if(clientes[i].genero =='M'){
-                   total++;
-               }
-           }
-    }return total;
+        for (int i = 0; i < 100; i++) {
+            if (clientes[i] != null) {
+                if (clientes[i].genero == 'M') {
+                    total++;
+                }
+            }
+        }
+        return total;
     }
-    public int TFemenino(){
+
+    public int TFemenino() {
         int total = 0;
-        for(int i = 0; i < 100; i++){
-           if(clientes[i] !=null){
-               if(clientes[i].genero =='F'){
-                   total++;
-               }
-           }
-    }return total;
+        for (int i = 0; i < 100; i++) {
+            if (clientes[i] != null) {
+                if (clientes[i].genero == 'F') {
+                    total++;
+                }
+            }
+        }
+        return total;
     }
-    public int rango18(){
+
+    public int rango18() {
         int total = 0;
-        for(int i = 0; i < 100; i++){
-           if(clientes[i] !=null){
-               if(clientes[i].Edad >= 18 && clientes[i].Edad <30){
-                   total++;
-               }
-           }
-    }return total;
-    } 
-    public int rango31(){
-        int total = 0;
-        for(int i = 0; i < 100; i++){
-           if(clientes[i] !=null){
-               if(clientes[i].Edad >= 31 && clientes[i].Edad <45){
-                   total++;
-               }
-           }
-    }return total;
+        for (int i = 0; i < 100; i++) {
+            if (clientes[i] != null) {
+                if (clientes[i].Edad >= 18 && clientes[i].Edad < 30) {
+                    total++;
+                }
+            }
+        }
+        return total;
     }
-    public int rango45(){
+
+    public int rango31() {
         int total = 0;
-        for(int i = 0; i < 100; i++){
-           if(clientes[i] !=null){
-               if(clientes[i].Edad >45){
-                   total++;
-               }
-           }
-    }return total;
-    } 
-    
-    
+        for (int i = 0; i < 100; i++) {
+            if (clientes[i] != null) {
+                if (clientes[i].Edad >= 31 && clientes[i].Edad < 45) {
+                    total++;
+                }
+            }
+        }
+        return total;
+    }
+
+    public int rango45() {
+        int total = 0;
+        for (int i = 0; i < 100; i++) {
+            if (clientes[i] != null) {
+                if (clientes[i].Edad > 45) {
+                    total++;
+                }
+            }
+        }
+        return total;
+    }
+
     public void leerArchivoCSV(String ruta) {
         try {
             BufferedReader archivoTemporal = new BufferedReader(new FileReader(ruta));
