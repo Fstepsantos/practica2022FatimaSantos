@@ -39,15 +39,19 @@ public class ventana extends JFrame {
     JPanel PCrear;
     int control = 2;
     cliente clientes[] = new cliente[100];
-    int controlCliente = 0;
+    //int controlCliente = 0;
     JPanel PCClientes;
     int controlCli = 0;
+    Producto Pro[] = new Producto[100];
+    JPanel PCPro;
+    int controlPro = 0;
 
     //Metodo constructor
     public ventana() {
         objetos();
         crearAdmin();
         crearClientes();
+        crearProductos();
     }
 
     public void crearAdmin() {
@@ -69,6 +73,14 @@ public class ventana extends JFrame {
         clientes[0].genero = 'F';
         clientes[0].NIT = 147852;
 
+    }
+
+    public void crearProductos() {
+        Pro[0] = new Producto();
+        Pro[0].Nombre = "Camisa polo";
+        //Pro[0].Precio = (float) 250.50;
+        Pro[0].Precio = 250;//prueba
+        Pro[0].Cantidad = 12;
     }
 
     public void objetos() {
@@ -161,6 +173,7 @@ public class ventana extends JFrame {
         this.setTitle("Control Principal");
         PLogin.setVisible(false);
 
+        //Boton de clientes
         JButton btnAdminCl = new JButton("Administración de Clientes");
         btnAdminCl.setBounds(100, 60, 280, 39);
         PControl.add(btnAdminCl);
@@ -174,13 +187,20 @@ public class ventana extends JFrame {
         };
         btnAdminCl.addActionListener(AdmiClientes);
 
+        //Boton de productos
         JButton btnAdminPro = new JButton("Administración de Productos");
         btnAdminPro.setBounds(100, 120, 280, 39);
         PControl.add(btnAdminPro);
+        ActionListener AdmiPro = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                PCProductos();
+                PCPro.setVisible(true);
+            }
 
-        JButton btnAdminRe = new JButton("Administración de Reportes");
-        btnAdminRe.setBounds(100, 180, 280, 39);
-        PControl.add(btnAdminRe);
+        };
+        btnAdminPro.addActionListener(AdmiPro);
+
     }
 
     public void panelCrearUsu() {
@@ -311,7 +331,7 @@ public class ventana extends JFrame {
         PCClientes = new JPanel();
         this.getContentPane().add(PCClientes);
         PCClientes.setLayout(null);
-        this.setSize(910, 370);
+        this.setSize(980, 370);
         this.setTitle("Control de clientes");
         PControl.setVisible(false);
 
@@ -337,11 +357,11 @@ public class ventana extends JFrame {
         DefaultPieDataset datos = new DefaultPieDataset();
         datos.setValue("Masculino", TMasculino());
         datos.setValue("Femenino", TFemenino());
-        JFreeChart GCircular = ChartFactory.createPieChart("Genero", datos);
+        JFreeChart GCircular = ChartFactory.createPieChart("Género", datos);
         ChartPanel PCircular = new ChartPanel(GCircular);
-        PCircular.setBounds(350, 10, 250, 270);
+        PCircular.setBounds(350, 10, 290, 270);
         PCClientes.add(PCircular);
-        
+
         //Creacion del grafico de columnas
         DefaultCategoryDataset Datos = new DefaultCategoryDataset();
         Datos.addValue(rango18(), "18-30", "Edad");
@@ -351,7 +371,7 @@ public class ventana extends JFrame {
         btnCargarArchivo.setBounds(10, 215, 320, 30);
         JFreeChart graficoColumnas = ChartFactory.createBarChart("Rango edades", "Edad", "Escala", Datos, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel panelColumnas = new ChartPanel(graficoColumnas);
-        panelColumnas.setBounds(620, 10, 250, 270);
+        panelColumnas.setBounds(660, 10, 290, 270);
         PCClientes.add(panelColumnas);
 
         PCClientes.add(btnCargarArchivo);
@@ -369,6 +389,7 @@ public class ventana extends JFrame {
             }
         };
         btnCargarArchivo.addActionListener(buscarArchivo);
+        //boton para crear reporte clientes
         JButton btnReport = new JButton("Crear Reporte");
         btnReport.setBounds(10, 250, 320, 30);
         PCClientes.add(btnReport);
@@ -384,26 +405,39 @@ public class ventana extends JFrame {
     public void CrearReporte() {
 
         try {
+            PrintWriter pincelCSS = new PrintWriter("Reportes/Style.css", "UTF-8");
+            pincelCSS.println("html{font-size: 20px, font-Time new roman}");
+            pincelCSS.println("body{background-image:url(degradado.png);background-repeat: no-repeat; background-size: 100%;}");
+            pincelCSS.println("h1{font-size:60px; text-align: center; color: white;}");
+            pincelCSS.println("table{border-collapse: collapse; width: 800px}");
+            pincelCSS.println("td{background-color: #D0FFD6;text-align: center;padding:6px;color:black;}");
+            pincelCSS.println("th{background-color:#a7f8dd}");
+            pincelCSS.println("th{text-align: center; padding: 6px;}");
+
+            //falta completar CSS
+            pincelCSS.close();
+
             PrintWriter pincel = new PrintWriter("Reportes/reporte.html", "UTF-8");
             pincel.println("<!DOCTYPE html>");
             pincel.println("<html>");
             pincel.println("<head>");
             pincel.println("<title>Reporte del sistema</title>");
+            pincel.println("<link rel=\"stylesheet\" href=\"Style.css\">");
             pincel.println("</head>");
             pincel.println("<body>");
             pincel.println("<center>");
             pincel.println("<h1>Listado de clientes en el sistema</h1>");
             pincel.println("<br>");
 
-            pincel.println("<table border =1>");
+            pincel.println("<table>");
             pincel.println("<tr>");
-            pincel.println("<td>NIT</td><td>Nombre</td><td>Edad</td><td>Genero</td>");
+            pincel.println("<th>NIT</th><th>Nombre</th><th>Edad</th><th>Género</th>");
             pincel.println("</tr>");
 
             for (int i = 0; i < 99; i++) {
                 if (clientes[i] != null) {
                     pincel.println("<tr>");
-                    pincel.println("<td>" + clientes[i].NIT + "</td>" + "<td>" + clientes[i].Nombre + "</td>" + "<td>" + clientes[i].Edad + "</td>" + "<td>" + clientes[i].genero);
+                    pincel.println("<td>" + clientes[i].NIT + "</td>" + "<td>" + clientes[i].Nombre + "</td>" + "<td>" + clientes[i].Edad + "</td>" + "<td>" + clientes[i].genero + "</td>");
                     pincel.println("</tr>");
                 }
             }
@@ -517,6 +551,89 @@ public class ventana extends JFrame {
         }
 
     }
+
+    public void leerCSVPro(String ruta) {
+        try {
+            BufferedReader archivoTemp = new BufferedReader(new FileReader(ruta));
+            String LineLeidaPro = "";
+            while (LineLeidaPro != null) {
+                LineLeidaPro = archivoTemp.readLine();
+                if (LineLeidaPro != null) {
+                    String DatosSeparadosPro[] = LineLeidaPro.split(",");
+                    int posicion = 0;
+                    if (controlPro < 10) {
+                        for (int i = 0; 1 < 99; i++) {
+                            if (Pro[i] == null) {
+                                posicion = i;
+                                break;
+                            }
+                        }
+                        Pro[posicion] = new Producto();
+                        Pro[posicion].Nombre = DatosSeparadosPro[0];
+                        Pro[posicion].Precio = Integer.parseInt(DatosSeparadosPro[1]);//Parte que falla con float
+                        Pro[posicion].Cantidad = Integer.parseInt(DatosSeparadosPro[2]);
+                        controlPro++;
+                    } else {
+
+                        JOptionPane.showMessageDialog(null, "No se pueden registrar más productos");
+                    }
+                }
+            }
+            JOptionPane.showMessageDialog(null, "Los productos fueron registrados correctamente, total de productos " + " " + controlPro);
+            archivoTemp.close();
+        } catch (IOException error) {
+            JOptionPane.showMessageDialog(null, "No se pudo abrir el archivo CSV");
+
+        }
+    }
+
+    public void PCProductos() {
+        PCPro = new JPanel();
+        this.getContentPane().add(PCPro);
+        PCPro.setLayout(null);
+        this.setSize(910, 370);
+        this.setTitle("Control de productos");
+        PControl.setVisible(false);
+
+        //Creacion de la tabla de productos
+        DefaultTableModel datosProTabla = new DefaultTableModel();
+        datosProTabla.addColumn("Productos");
+        datosProTabla.addColumn("Precio");
+        datosProTabla.addColumn("Cantidad");
+
+        for (int i = 0; i < 100; i++) {
+            if (Pro[i] != null) {
+                String fila[] = {Pro[i].Nombre, String.valueOf((Pro[i].Precio)), String.valueOf(Pro[i].Cantidad)};
+                datosProTabla.addRow(fila);
+            }
+        }
+        JTable tablaProductos = new JTable(datosProTabla);
+        JScrollPane barraTablaProductos = new JScrollPane(tablaProductos);
+        barraTablaProductos.setBounds(10, 10, 320, 200);
+        PCPro.add(barraTablaProductos);
+
+        JButton btnCargarArchPro = new JButton("Buscar archivos CSV");
+        btnCargarArchPro.setBounds(10, 215, 320, 30);
+
+        PCPro.add(btnCargarArchPro);
+        ActionListener buscarArchivoCSV = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                File archivoSelectPro;
+                JFileChooser ventanaSelection = new JFileChooser();
+                ventanaSelection.showOpenDialog(null);
+                archivoSelectPro = ventanaSelection.getSelectedFile();
+                System.out.println("La ubicación del archivo es:" + archivoSelectPro.getPath());
+                leerCSVPro(archivoSelectPro.getPath());
+                PCPro.setVisible(false);
+                PCProductos();
+                System.out.println("Boton funciona");
+            }
+        };
+        btnCargarArchPro.addActionListener(buscarArchivoCSV);
+    }
+
 }
+
 // lengh obteniamos el tamaño de caracteres
 //Split es un metodo que separa las cadenas de textos en vectores 
