@@ -78,9 +78,12 @@ public class ventana extends JFrame {
     public void crearProductos() {
         Pro[0] = new Producto();
         Pro[0].Nombre = "Camisa polo";
-        //Pro[0].Precio = (float) 250.50;
-        Pro[0].Precio = 250;//prueba
-        Pro[0].Cantidad = 12;
+        Pro[0].Precio = (float) 25.50;
+        Pro[0].Cantidad = 2;
+        Pro[1] = new Producto();
+        Pro[1].Nombre = "Camisa polo Amarilla";
+        Pro[1].Precio = (float) 25.50;
+        Pro[1].Cantidad = 0;
     }
 
     public void objetos() {
@@ -313,7 +316,7 @@ public class ventana extends JFrame {
                     break;
                 }
             }
-            //System.out.println("Posición libre" + " " +posicion);
+           
             usuSistema[posicion] = new usuario();
             usuSistema[posicion].nombreUsuario = Usu;
             usuSistema[posicion].nombre = nombre;
@@ -396,10 +399,45 @@ public class ventana extends JFrame {
         ActionListener CrearHtml = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+               Ordenar();
                 CrearReporte();
             }
         };
         btnReport.addActionListener(CrearHtml);
+        
+        JButton btnVolver = new JButton("Volver al menú principal");
+        btnVolver.setBounds(10, 290, 320, 30);
+        PCClientes.add(btnVolver);
+        ActionListener volverInicio = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                PControl.setVisible(true);
+                PCClientes.setVisible(false);
+                volverinicio();
+            }
+    };
+        btnVolver.addActionListener(volverInicio);
+    }
+    
+    public void Ordenar(){
+        cliente auxiliar;
+        for(int i=0; i<99; i++){
+            for(int j=0; j<99; j++){
+                
+                if(clientes[j+1] ==null){
+                    break;
+                }else{
+                    
+                    if(clientes[j].Edad>clientes[j+1].Edad){
+                        auxiliar = clientes[j+1];
+                        clientes[j+1] = clientes[j];
+                        clientes[j] = auxiliar;
+                    }
+                }
+            }
+        
+        }
+    
     }
 
     public void CrearReporte() {
@@ -410,11 +448,10 @@ public class ventana extends JFrame {
             pincelCSS.println("body{background-image:url(degradado.png);background-repeat: no-repeat; background-size: 100%;}");
             pincelCSS.println("h1{font-size:60px; text-align: center; color: white;}");
             pincelCSS.println("table{border-collapse: collapse; width: 800px}");
-            pincelCSS.println("td{background-color: #D0FFD6;text-align: center;padding:6px;color:black;}");
+            pincelCSS.println("td{background-color: white;text-align: center;padding:6px;color:black;}");
             pincelCSS.println("th{background-color:#a7f8dd}");
             pincelCSS.println("th{text-align: center; padding: 6px;}");
 
-            //falta completar CSS
             pincelCSS.close();
 
             PrintWriter pincel = new PrintWriter("Reportes/reporte.html", "UTF-8");
@@ -561,7 +598,7 @@ public class ventana extends JFrame {
                 if (LineLeidaPro != null) {
                     String DatosSeparadosPro[] = LineLeidaPro.split(",");
                     int posicion = 0;
-                    if (controlPro < 10) {
+                     if (controlPro < 10) {
                         for (int i = 0; 1 < 99; i++) {
                             if (Pro[i] == null) {
                                 posicion = i;
@@ -570,12 +607,18 @@ public class ventana extends JFrame {
                         }
                         Pro[posicion] = new Producto();
                         Pro[posicion].Nombre = DatosSeparadosPro[0];
-                        Pro[posicion].Precio = Integer.parseInt(DatosSeparadosPro[1]);//Parte que falla con float
+                        Pro[posicion].Precio = Float.parseFloat(DatosSeparadosPro[1]);
                         Pro[posicion].Cantidad = Integer.parseInt(DatosSeparadosPro[2]);
                         controlPro++;
+//                        if(Pro[posicion].Cantidad == 0){
+//                            
+//                        JOptionPane.showMessageDialog(null, "Producto Agotado" +" "+ Pro[posicion].Nombre);
+//                        }
+                       
                     } else {
 
-                        JOptionPane.showMessageDialog(null, "No se pueden registrar más productos");
+                           JOptionPane.showMessageDialog(null, "No se pueden registrar más productos");
+                        
                     }
                 }
             }
@@ -591,8 +634,8 @@ public class ventana extends JFrame {
         PCPro = new JPanel();
         this.getContentPane().add(PCPro);
         PCPro.setLayout(null);
-        this.setSize(910, 370);
-        this.setTitle("Control de productos");
+        this.setSize(730, 390);
+        this.setTitle("Control de Productos");
         PControl.setVisible(false);
 
         //Creacion de la tabla de productos
@@ -611,9 +654,19 @@ public class ventana extends JFrame {
         JScrollPane barraTablaProductos = new JScrollPane(tablaProductos);
         barraTablaProductos.setBounds(10, 10, 320, 200);
         PCPro.add(barraTablaProductos);
-
+        //Creacion del grafico de columnas de productos
+        DefaultCategoryDataset DatosPro = new DefaultCategoryDataset();
+        DatosPro.addValue(rango20(), "20 - 50", "Precio");
+        DatosPro.addValue(rango51(), "51 - 81", "Precio");
+        DatosPro.addValue(rango81(), "81 - 111", "Precio");
+        DatosPro.addValue(rango112(), "112 en adelate", "Precio");
+         //boton buscar CSV    
         JButton btnCargarArchPro = new JButton("Buscar archivos CSV");
         btnCargarArchPro.setBounds(10, 215, 320, 30);
+        JFreeChart GColumnas = ChartFactory.createBarChart("Rango precios", "Precio", "Escala", DatosPro, PlotOrientation.VERTICAL, true, true, false);
+        ChartPanel panelC = new ChartPanel(GColumnas);
+        panelC.setBounds(350, 10, 320, 310);
+        PCPro.add(panelC);
 
         PCPro.add(btnCargarArchPro);
         ActionListener buscarArchivoCSV = new ActionListener() {
@@ -627,12 +680,164 @@ public class ventana extends JFrame {
                 leerCSVPro(archivoSelectPro.getPath());
                 PCPro.setVisible(false);
                 PCProductos();
-                System.out.println("Boton funciona");
+                
+            }
+        };btnCargarArchPro.addActionListener(buscarArchivoCSV);
+        
+        JButton btnReportPro = new JButton("Crear un reporte");
+        btnReportPro.setBounds(10, 250, 320, 30);
+        PCPro.add(btnReportPro);
+        ActionListener CrearHtmlPro = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+               CrearReportePRO();
             }
         };
-        btnCargarArchPro.addActionListener(buscarArchivoCSV);
+        btnReportPro.addActionListener(CrearHtmlPro);
+        
+        
+        JButton btnVolver = new JButton("Volver al menú principal");
+        btnVolver.setBounds(10, 290, 320, 30);
+        PCPro.add(btnVolver);
+        ActionListener volverInicio = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                PControl.setVisible(true);
+                PCPro.setVisible(false);
+                volverinicio();
+            }
+    };
+        btnVolver.addActionListener(volverInicio);
+               
+    }
+    public void OrdenarPro(){
+        Producto aux;
+        for(int i=0; i<99; i++){
+            for(int j=0; j<99; j++){
+                
+                if(Pro[j+1] ==null){
+                    break;
+                }else{
+                    
+                    if(Pro[j].Precio>Pro[j+1].Precio){
+                        aux = Pro[j+1];
+                        Pro[j+1] = Pro[j];
+                        Pro[j] = aux;
+                        
+                    }
+                }
+            }
+        
+        }
+    
+    }
+    public void CrearReportePRO() {
+
+        try {
+            PrintWriter pincelCSS = new PrintWriter("ReportesPRO/Style.css", "UTF-8");
+            pincelCSS.println("html{font-size: 20px, font-Time new roman}");
+            pincelCSS.println("body{background-image:url(DegradadoPRO.png);background-repeat: no-repeat; background-size: 100%;}");
+            pincelCSS.println("h1{font-size:60px; text-align: center; color: white;}");
+            pincelCSS.println("table{border-collapse: collapse; width: 800px}");
+            pincelCSS.println("td{background-color: white;text-align: center;padding:6px;color:black;}");
+            pincelCSS.println("th{background-color:#9ce9de}");
+            pincelCSS.println("th{text-align: center; padding: 6px;}");
+
+            pincelCSS.close();
+
+            PrintWriter pincel = new PrintWriter("ReportesPRO/reporte.html", "UTF-8");
+            pincel.println("<!DOCTYPE html>");
+            pincel.println("<html>");
+            pincel.println("<head>");
+            pincel.println("<title>Reportes del sistema</title>");
+            pincel.println("<link rel=\"stylesheet\" href=\"Style.css\">");
+            pincel.println("</head>");
+            pincel.println("<body>");
+            pincel.println("<center>");
+            pincel.println("<h1>Total de productos en el sistema</h1>");
+            pincel.println("<br>");
+
+            pincel.println("<table>");
+            pincel.println("<tr>");
+            pincel.println("<th>Productos</th><th>Precios</th><th>Cantidades</th>");
+            pincel.println("</tr>");
+
+            for (int i = 0; i < 99; i++) {
+                
+                if (Pro[i] != null) {   
+                    if (Pro[i].Cantidad ==0){
+                    pincel.println("<tr>");
+                    pincel.println("<td>" + Pro[i].Nombre+ "</td>" + "<td>" + Pro[i].Precio + "</td>" + "<td>" + "Agotado" + "</td>");
+                    pincel.println("</tr>");
+                    }else{
+                    pincel.println("<tr>");
+                    pincel.println("<td>" + Pro[i].Nombre+ "</td>" + "<td>" + Pro[i].Precio + "</td>" + "<td>" +Pro[i].Cantidad  + "</td>");
+                    pincel.println("</tr>");
+                    
+                    }
+                }
+            }
+            pincel.println("</table>");
+
+            pincel.println("</center>");
+            pincel.println("</body>");
+            pincel.println("</html>");
+
+            pincel.close();
+            JOptionPane.showMessageDialog(null, "Se logro crear el reporte");
+
+        } catch (IOException error) {
+            JOptionPane.showMessageDialog(null, "No se logro crear el reporte");
+        }
     }
 
+    public int rango20() {
+        int totalPro = 0;
+        for (int i = 0; i < 100; i++) {
+            if (Pro[i] != null) {
+                if (Pro[i].Precio >= 20 && Pro[i].Precio <= 50) {
+                    totalPro++;
+                }
+            }
+        }
+        return totalPro;
+    }
+
+    public int rango51() {
+        int totalPro = 0;
+        for (int i = 0; i < 100; i++) {
+            if (Pro[i] != null) {
+                if (Pro[i].Precio >= 51 && Pro[i].Precio <=81) {
+                    totalPro++;
+                }
+            }
+        }
+        return totalPro;
+    }
+
+    public int rango81() {
+        int totalPro = 0;
+        for (int i = 0; i < 100; i++) {
+            if (Pro[i] != null) {
+                if (Pro[i].Precio >=82 && Pro[i].Precio <=111) {
+                    totalPro++;
+                }
+            }
+        }
+        return totalPro;
+    }    
+    
+     public int rango112() {
+        int totalPro = 0;
+        for (int i = 0; i < 100; i++) {
+            if (Pro[i] != null) {
+                if (Pro[i].Precio >= 112) {
+                    totalPro++;
+                }
+            }
+        }
+        return totalPro;
+    }   
 }
 
 // lengh obteniamos el tamaño de caracteres

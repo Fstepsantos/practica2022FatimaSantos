@@ -6,7 +6,6 @@ package sistema.administrativo;
  */
 public class Producto {
    String Nombre;
-   //float Precio;
-   int Precio;//pueba
+   float Precio;
    int Cantidad;
 }
