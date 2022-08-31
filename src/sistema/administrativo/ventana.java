@@ -19,6 +19,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -41,7 +42,7 @@ public class ventana extends JFrame {
     cliente clientes[] = new cliente[100];
     //int controlCliente = 0;
     JPanel PCClientes;
-    int controlCli = 0;
+    int controlCli = 2;
     Producto Pro[] = new Producto[100];
     JPanel PCPro;
     int controlPro = 0;
@@ -80,6 +81,7 @@ public class ventana extends JFrame {
         Pro[0].Nombre = "Camisa polo";
         Pro[0].Precio = (float) 25.50;
         Pro[0].Cantidad = 2;
+        
         Pro[1] = new Producto();
         Pro[1].Nombre = "Camisa polo Amarilla";
         Pro[1].Precio = (float) 25.50;
@@ -90,36 +92,45 @@ public class ventana extends JFrame {
         //crear cristal donde estarán todos los elementos 
         PLogin = new JPanel();
         this.getContentPane().add(PLogin); //this sirve para indicarle que ha esa ventana se le ha creado un panel
-
+        PLogin.setBackground(new Color(4, 56, 63));
+        
         JLabel lblLogin = new JLabel("Iniciar Sesión");
         PLogin.setLayout(null); //setLayout se utiliza para que el programa tome nuestra posición
-        lblLogin.setFont(new Font("Roboto", Font.TYPE1_FONT, 22));
+        lblLogin.setFont(new Font("Showcard Gothic", Font.TYPE1_FONT, 22));
+        lblLogin.setForeground(Color.WHITE);
         lblLogin.setBounds(21, 10, 300, 35);
         PLogin.add(lblLogin);
-
         JLabel lbUsu = new JLabel("Usuario");
         PLogin.setLayout(null);
         lbUsu.setBounds(61, 62, 100, 35);
+        lbUsu.setForeground(Color.WHITE);
         lbUsu.setFont(new Font("Roboto", Font.PLAIN, 15));
         PLogin.add(lbUsu);
 
         JLabel lbCon = new JLabel("Contraseña");
         PLogin.setLayout(null);
         lbCon.setFont(new Font("Roboto", Font.PLAIN, 15));
+        lbCon.setForeground(Color.WHITE);
         lbCon.setBounds(61, 120, 100, 35);
         PLogin.add(lbCon);
 
         JTextField txtUsu = new JTextField();
         txtUsu.setBounds(190, 66, 205, 30);
+        txtUsu.setBorder(new EmptyBorder(0,0,0,0));
+        txtUsu.setBackground(Color.white);
 
         PLogin.add(txtUsu);
 
         JPasswordField txtContra = new JPasswordField();
         txtContra.setBounds(190, 126, 205, 30);
+        txtContra.setBorder(new EmptyBorder(0,0,0,0));
+        txtContra.setBackground(Color.white);
         PLogin.add(txtContra);
 
         JButton btnIngresar = new JButton("INGRESAR");
         btnIngresar.setBounds(61, 230, 150, 39);
+        btnIngresar.setBackground(new Color(49, 143, 154));
+        btnIngresar.setForeground(Color.WHITE);
         PLogin.add(btnIngresar);
         ActionListener ingresar = new ActionListener() {
             @Override
@@ -138,6 +149,8 @@ public class ventana extends JFrame {
 
         JButton btnCrearUsu = new JButton("REGISTRARSE");
         btnCrearUsu.setBounds(245, 230, 150, 39);
+        btnCrearUsu.setBackground(new Color(49, 143, 154));
+        btnCrearUsu.setForeground(Color.WHITE);
         PLogin.add(btnCrearUsu);
         ActionListener crear = new ActionListener() {
             @Override
@@ -154,6 +167,7 @@ public class ventana extends JFrame {
         for (int i = 0; i < 10; i++) {
             if (usuSistema[i] != null) {
                 if (usuSistema[i].nombreUsuario.equals(nombreUsuario) && usuSistema[i].contra.equals(contra)) {
+                    //equals compara datos
                     JOptionPane.showMessageDialog(null, "Bienvenido al Sistema" + " " + nombreUsuario);
                     panelControl();
                     encontrado = true;
@@ -173,12 +187,15 @@ public class ventana extends JFrame {
         this.getContentPane().add(PControl);
         PControl.setLayout(null);
         this.setSize(500, 350);
+        PControl.setBackground(Color.WHITE);
         this.setTitle("Control Principal");
         PLogin.setVisible(false);
 
         //Boton de clientes
         JButton btnAdminCl = new JButton("Administración de Clientes");
-        btnAdminCl.setBounds(100, 60, 280, 39);
+        btnAdminCl.setBounds(100, 80, 280, 52);
+        btnAdminCl.setBackground(new Color(4, 56, 63));
+        btnAdminCl.setForeground(Color.WHITE);
         PControl.add(btnAdminCl);
         ActionListener AdmiClientes = new ActionListener() {
             @Override
@@ -192,7 +209,9 @@ public class ventana extends JFrame {
 
         //Boton de productos
         JButton btnAdminPro = new JButton("Administración de Productos");
-        btnAdminPro.setBounds(100, 120, 280, 39);
+        btnAdminPro.setBounds(100, 160, 280, 52);
+        btnAdminPro.setBackground(new Color(4, 56, 63));
+        btnAdminPro.setForeground(Color.WHITE);
         PControl.add(btnAdminPro);
         ActionListener AdmiPro = new ActionListener() {
             @Override
@@ -208,6 +227,7 @@ public class ventana extends JFrame {
 
     public void panelCrearUsu() {
         PCrear = new JPanel();
+        PCrear.setBackground(Color.WHITE);
         this.getContentPane().add(PCrear);
         PCrear.setLayout(null);
         this.setSize(500, 350);
@@ -215,8 +235,8 @@ public class ventana extends JFrame {
         PLogin.setVisible(false);
 
         JLabel lblRegistro = new JLabel("Crea tu usuario");
-        lblRegistro.setFont(new Font("Roboto", Font.TYPE1_FONT, 22));
-        lblRegistro.setForeground(Color.BLACK);
+        lblRegistro.setFont(new Font("Showcard Gothic", Font.TYPE1_FONT, 22));
+        lblRegistro.setForeground(new Color(4, 56, 63));
         PCrear.setLayout(null);
         lblRegistro.setFont(new Font("Roboto", Font.PLAIN, 25));
         lblRegistro.setBounds(21, 10, 300, 35);
@@ -264,6 +284,8 @@ public class ventana extends JFrame {
 
         JButton btnReg = new JButton("REGISTRARSE");
         btnReg.setBounds(61, 245, 150, 39);
+        btnReg.setBackground(new Color(4, 56, 63));
+        btnReg.setForeground(Color.WHITE);
         PCrear.add(btnReg);
         ActionListener registrar = new ActionListener() {
             @Override
@@ -289,6 +311,8 @@ public class ventana extends JFrame {
 
         JButton btnVolver = new JButton("VOLVER AL INICIO");
         btnVolver.setBounds(245, 245, 150, 39);
+        btnVolver.setBackground(new Color(4, 56, 63));
+        btnVolver.setForeground(Color.WHITE);
         PCrear.add(btnVolver);
         ActionListener volverInicio = new ActionListener() {
             @Override
@@ -332,9 +356,10 @@ public class ventana extends JFrame {
 
     public void PCCli() {
         PCClientes = new JPanel();
+        PCClientes.setBackground(new Color(48, 127, 136));
         this.getContentPane().add(PCClientes);
         PCClientes.setLayout(null);
-        this.setSize(980, 370);
+        this.setSize(1080, 380);
         this.setTitle("Control de clientes");
         PControl.setVisible(false);
 
@@ -347,14 +372,15 @@ public class ventana extends JFrame {
 
         for (int i = 0; i < 100; i++) {
             if (clientes[i] != null) {
+                //valueOf ayuda a convertir # a cadenas de texto
                 String fila[] = {clientes[i].Nombre, String.valueOf(clientes[i].Edad), String.valueOf(clientes[i].genero), String.valueOf(clientes[i].NIT)};
                 datosTabla.addRow(fila);
             }
         }
-        JTable tablaClientes = new JTable(datosTabla);
-        JScrollPane barraTablaClientes = new JScrollPane(tablaClientes);
-        barraTablaClientes.setBounds(10, 10, 320, 200);
-        PCClientes.add(barraTablaClientes);
+        JTable tablaCli = new JTable(datosTabla);
+        JScrollPane barraTCli = new JScrollPane(tablaCli);
+        barraTCli.setBounds(10,10,320,190);
+        PCClientes.add(barraTCli);
 
         //Creacion del grafico circular
         DefaultPieDataset datos = new DefaultPieDataset();
@@ -362,7 +388,7 @@ public class ventana extends JFrame {
         datos.setValue("Femenino", TFemenino());
         JFreeChart GCircular = ChartFactory.createPieChart("Género", datos);
         ChartPanel PCircular = new ChartPanel(GCircular);
-        PCircular.setBounds(350, 10, 290, 270);
+        PCircular.setBounds(360, 10, 320, 310);
         PCClientes.add(PCircular);
 
         //Creacion del grafico de columnas
@@ -374,7 +400,7 @@ public class ventana extends JFrame {
         btnCargarArchivo.setBounds(10, 215, 320, 30);
         JFreeChart graficoColumnas = ChartFactory.createBarChart("Rango edades", "Edad", "Escala", Datos, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel panelColumnas = new ChartPanel(graficoColumnas);
-        panelColumnas.setBounds(660, 10, 290, 270);
+        panelColumnas.setBounds(700, 10, 320, 310);
         PCClientes.add(panelColumnas);
 
         PCClientes.add(btnCargarArchivo);
@@ -385,10 +411,14 @@ public class ventana extends JFrame {
                 JFileChooser ventanaSeleccion = new JFileChooser();
                 ventanaSeleccion.showOpenDialog(null);
                 archivoSeleccionado = ventanaSeleccion.getSelectedFile();
-                System.out.println("La ubicación del archivo es:" + archivoSeleccionado.getPath());
-                leerArchivoCSV(archivoSeleccionado.getPath());
-                PCClientes.setVisible(false);
-                PCCli();
+                if(archivoSeleccionado == null){
+                    JOptionPane.showMessageDialog(null,"No hay ruta");
+                }else {
+                    leerArchivoCSV(archivoSeleccionado.getPath());
+                    PCClientes.setVisible(false);
+                    PCCli();
+                }
+                
             }
         };
         btnCargarArchivo.addActionListener(buscarArchivo);
@@ -400,7 +430,7 @@ public class ventana extends JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                Ordenar();
-                CrearReporte();
+               CrearReporte();
             }
         };
         btnReport.addActionListener(CrearHtml);
@@ -428,7 +458,7 @@ public class ventana extends JFrame {
                     break;
                 }else{
                     
-                    if(clientes[j].Edad>clientes[j+1].Edad){
+                    if(clientes[j].Edad<clientes[j+1].Edad){
                         auxiliar = clientes[j+1];
                         clientes[j+1] = clientes[j];
                         clientes[j] = auxiliar;
@@ -445,11 +475,11 @@ public class ventana extends JFrame {
         try {
             PrintWriter pincelCSS = new PrintWriter("Reportes/Style.css", "UTF-8");
             pincelCSS.println("html{font-size: 20px, font-Time new roman}");
-            pincelCSS.println("body{background-image:url(degradado.png);background-repeat: no-repeat; background-size: 100%;}");
-            pincelCSS.println("h1{font-size:60px; text-align: center; color: white;}");
-            pincelCSS.println("table{border-collapse: collapse; width: 800px}");
-            pincelCSS.println("td{background-color: white;text-align: center;padding:6px;color:black;}");
-            pincelCSS.println("th{background-color:#a7f8dd}");
+            pincelCSS.println("body{background-color: #C4F2FF ; background-size: 100%;}");
+            pincelCSS.println("h1{background-image: url(titulo1.png); background-size: 100%; background-repeat: no-repeat ;font-size:60px; text-align: center; color: Black;}");
+            pincelCSS.println("table{border:2px solid;border-collapse: collapse; width: 800px}");
+            pincelCSS.println("td{background-color: white;text-align: center;padding:6px;color:black}");
+            pincelCSS.println("th{background-color:#6FFFAA }");
             pincelCSS.println("th{text-align: center; padding: 6px;}");
 
             pincelCSS.close();
@@ -561,7 +591,7 @@ public class ventana extends JFrame {
                 if (lineaLeida != null) {
                     String DatosSeparados[] = lineaLeida.split(",");
                     int posicion = 0;
-                    if (controlCli < 10) {
+                    if (controlCli < 100) {
                         for (int i = 0; 1 < 99; i++) {
                             if (clientes[i] == null) {
                                 posicion = i;
@@ -577,6 +607,7 @@ public class ventana extends JFrame {
                     } else {
 
                         JOptionPane.showMessageDialog(null, "No se pueden registrar más clientes");
+                        break;
                     }
                 }
             }
@@ -598,7 +629,7 @@ public class ventana extends JFrame {
                 if (LineLeidaPro != null) {
                     String DatosSeparadosPro[] = LineLeidaPro.split(",");
                     int posicion = 0;
-                     if (controlPro < 10) {
+                     if (controlPro < 100) {
                         for (int i = 0; 1 < 99; i++) {
                             if (Pro[i] == null) {
                                 posicion = i;
@@ -610,15 +641,11 @@ public class ventana extends JFrame {
                         Pro[posicion].Precio = Float.parseFloat(DatosSeparadosPro[1]);
                         Pro[posicion].Cantidad = Integer.parseInt(DatosSeparadosPro[2]);
                         controlPro++;
-//                        if(Pro[posicion].Cantidad == 0){
-//                            
-//                        JOptionPane.showMessageDialog(null, "Producto Agotado" +" "+ Pro[posicion].Nombre);
-//                        }
                        
                     } else {
 
                            JOptionPane.showMessageDialog(null, "No se pueden registrar más productos");
-                        
+                           break;
                     }
                 }
             }
@@ -632,6 +659,7 @@ public class ventana extends JFrame {
 
     public void PCProductos() {
         PCPro = new JPanel();
+        PCPro.setBackground(Color.WHITE);
         this.getContentPane().add(PCPro);
         PCPro.setLayout(null);
         this.setSize(730, 390);
@@ -676,11 +704,13 @@ public class ventana extends JFrame {
                 JFileChooser ventanaSelection = new JFileChooser();
                 ventanaSelection.showOpenDialog(null);
                 archivoSelectPro = ventanaSelection.getSelectedFile();
-                System.out.println("La ubicación del archivo es:" + archivoSelectPro.getPath());
-                leerCSVPro(archivoSelectPro.getPath());
-                PCPro.setVisible(false);
-                PCProductos();
-                
+                if(archivoSelectPro == null){
+                    JOptionPane.showMessageDialog(null,"No hay ruta");
+                }else {
+                    leerCSVPro(archivoSelectPro.getPath());
+                    PCPro.setVisible(false);
+                    PCProductos();
+                }
             }
         };btnCargarArchPro.addActionListener(buscarArchivoCSV);
         
@@ -690,6 +720,7 @@ public class ventana extends JFrame {
         ActionListener CrearHtmlPro = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+               OrdenarPro();
                CrearReportePRO();
             }
         };
@@ -719,7 +750,7 @@ public class ventana extends JFrame {
                     break;
                 }else{
                     
-                    if(Pro[j].Precio>Pro[j+1].Precio){
+                    if(Pro[j].Precio<Pro[j+1].Precio){
                         aux = Pro[j+1];
                         Pro[j+1] = Pro[j];
                         Pro[j] = aux;
@@ -735,12 +766,11 @@ public class ventana extends JFrame {
 
         try {
             PrintWriter pincelCSS = new PrintWriter("ReportesPRO/Style.css", "UTF-8");
-            pincelCSS.println("html{font-size: 20px, font-Time new roman}");
-            pincelCSS.println("body{background-image:url(DegradadoPRO.png);background-repeat: no-repeat; background-size: 100%;}");
-            pincelCSS.println("h1{font-size:60px; text-align: center; color: white;}");
-            pincelCSS.println("table{border-collapse: collapse; width: 800px}");
-            pincelCSS.println("td{background-color: white;text-align: center;padding:6px;color:black;}");
-            pincelCSS.println("th{background-color:#9ce9de}");
+            pincelCSS.println("body{background-color:#FFCDED ; background-size: 100%;}");
+            pincelCSS.println("h1{background-image: url(titulo1.png); background-size: 100%; background-repeat: no-repeat ;font-size:60px; text-align: center; color: Black;}");
+            pincelCSS.println("table{border:2px solid;border-collapse: collapse; width: 800px}");
+            pincelCSS.println("td{background-color: white;text-align: center;padding:6px;color:black}");
+            pincelCSS.println("th{background-color:#C795FF }");
             pincelCSS.println("th{text-align: center; padding: 6px;}");
 
             pincelCSS.close();
