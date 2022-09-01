@@ -27,7 +27,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
-
+//JFreeChart libreria que aporta elementos gráficos
+//Libreria SWING crea entornos gráficos
 /**
  *
  * @author Fstep
@@ -187,14 +188,15 @@ public class ventana extends JFrame {
         this.getContentPane().add(PControl);
         PControl.setLayout(null);
         this.setSize(500, 350);
-        PControl.setBackground(Color.WHITE);
+        PControl.setBackground(new Color(4, 56, 63));
         this.setTitle("Control Principal");
+        PControl.setForeground(Color.WHITE);
         PLogin.setVisible(false);
 
         //Boton de clientes
         JButton btnAdminCl = new JButton("Administración de Clientes");
         btnAdminCl.setBounds(100, 80, 280, 52);
-        btnAdminCl.setBackground(new Color(4, 56, 63));
+        btnAdminCl.setBackground(new Color(49, 143, 154));
         btnAdminCl.setForeground(Color.WHITE);
         PControl.add(btnAdminCl);
         ActionListener AdmiClientes = new ActionListener() {
@@ -210,7 +212,7 @@ public class ventana extends JFrame {
         //Boton de productos
         JButton btnAdminPro = new JButton("Administración de Productos");
         btnAdminPro.setBounds(100, 160, 280, 52);
-        btnAdminPro.setBackground(new Color(4, 56, 63));
+        btnAdminPro.setBackground(new Color(49, 143, 154));
         btnAdminPro.setForeground(Color.WHITE);
         PControl.add(btnAdminPro);
         ActionListener AdmiPro = new ActionListener() {
@@ -238,7 +240,6 @@ public class ventana extends JFrame {
         lblRegistro.setFont(new Font("Showcard Gothic", Font.TYPE1_FONT, 22));
         lblRegistro.setForeground(new Color(4, 56, 63));
         PCrear.setLayout(null);
-        lblRegistro.setFont(new Font("Roboto", Font.PLAIN, 25));
         lblRegistro.setBounds(21, 10, 300, 35);
         PCrear.add(lblRegistro);
 
@@ -473,7 +474,7 @@ public class ventana extends JFrame {
     public void CrearReporte() {
 
         try {
-            PrintWriter pincelCSS = new PrintWriter("Reportes/Style.css", "UTF-8");
+            PrintWriter pincelCSS = new PrintWriter("Reportes/Style.css", "UTF-8");//UTF-8 es la codificación
             pincelCSS.println("html{font-size: 20px, font-Time new roman}");
             pincelCSS.println("body{background-color: #C4F2FF ; background-size: 100%;}");
             pincelCSS.println("h1{background-image: url(titulo1.png); background-size: 100%; background-repeat: no-repeat ;font-size:60px; text-align: center; color: Black;}");
@@ -589,7 +590,7 @@ public class ventana extends JFrame {
             while (lineaLeida != null) {
                 lineaLeida = archivoTemporal.readLine();
                 if (lineaLeida != null) {
-                    String DatosSeparados[] = lineaLeida.split(",");
+                    String DatosSeparados[] = lineaLeida.split(","); //Split transforma cadenas de texto a pequeños fragmentos para el vector
                     int posicion = 0;
                     if (controlCli < 100) {
                         for (int i = 0; 1 < 99; i++) {
@@ -659,7 +660,8 @@ public class ventana extends JFrame {
 
     public void PCProductos() {
         PCPro = new JPanel();
-        PCPro.setBackground(Color.WHITE);
+        PCPro.setBackground(new Color(48, 127, 136));
+        PCPro.setForeground(Color.WHITE);
         this.getContentPane().add(PCPro);
         PCPro.setLayout(null);
         this.setSize(730, 390);
