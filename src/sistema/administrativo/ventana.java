@@ -642,7 +642,7 @@ public class ventana extends JFrame {
                         Pro[posicion].Precio = Float.parseFloat(DatosSeparadosPro[1]);
                         Pro[posicion].Cantidad = Integer.parseInt(DatosSeparadosPro[2]);
                         controlPro++;
-                       
+                      
                     } else {
 
                            JOptionPane.showMessageDialog(null, "No se pueden registrar más productos");
@@ -699,6 +699,7 @@ public class ventana extends JFrame {
         PCPro.add(panelC);
 
         PCPro.add(btnCargarArchPro);
+        
         ActionListener buscarArchivoCSV = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
